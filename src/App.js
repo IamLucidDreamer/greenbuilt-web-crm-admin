@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+// Importing Context From Redux
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import { store } from "./store/store";
+
+// Importing Ant Design System
+import "antd/dist/antd.css";
+import "./assets/styles/main.css";
+import "./assets/styles/responsive.css";
+
+// Importing Toast for Notifications
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// Importing Components
+import { Navigation } from "./features/navigation/Index";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      {/* ToastContainer is Controlling all the Notifications  */}
+      <ToastContainer />
+      <BrowserRouter>
+        <Navigation />
+      </BrowserRouter>
+    </Provider>
   );
 }
 
