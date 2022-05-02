@@ -1,13 +1,13 @@
 import React, { useEffect, useReducer } from "react";
-import axios from "../../../appConfig/httpHelper";
-import ActionButtons from "../../components/actionsButtons/Index";
-import { DataTable } from "../../components/table/Index";
+import ActionButtons from "../components/actionsButtons/Index";
+import { DataTable } from "../components/table/Index";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { EyeOutlined, CheckOutlined } from "@ant-design/icons";
-import { innerTableActionBtnDesign } from "../../components/styles/innerTableActions";
+import { EyeOutlined, CheckOutlined, DeleteOutlined } from "@ant-design/icons";
+import { innerTableActionBtnDesign } from "../components/styles/innerTableActions";
+import axios from "../../appConfig/httpHelper";
 
-export const BusinessUsersApprovals = () => {
+export const ActualConsumptionManager = () => {
   const navigate = useNavigate();
   const token = JSON.parse(localStorage.getItem("jwt"));
 
@@ -26,16 +26,16 @@ export const BusinessUsersApprovals = () => {
 
   const [value, setValue] = useReducer(
     (state, diff) => ({ ...state, ...diff }),
-    { businessApproval: [], drawerValue: {} }
+    { pointsApproval: [], drawerValue: {} }
   );
 
-  const { businessApproval, drawerValue } = value;
+  const { pointsApproval, drawerValue } = value;
 
   // Functions Used for Different Data
   const requestsCaller = () => {
     setActions({ loading: true });
     axios
-      .get("/user/get-all", {
+      .get("/power-consumption/get-all", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -43,9 +43,7 @@ export const BusinessUsersApprovals = () => {
       .then((res) => {
         console.log(res);
         setValue({
-          businessApproval: res.data.user
-            .filter((val) => val.role === 2)
-            .filter((val) => !val.isApproved),
+          pointsApproval: res.data.data.filter(val => !val.isApproved),
         });
       })
       .catch((err) => console.log(err))
@@ -54,11 +52,13 @@ export const BusinessUsersApprovals = () => {
 
   useEffect(() => requestsCaller(), []);
 
-  const approveBusinessUser = (record) => {
+  const approvePoints = (record) => {
     axios
       .post(
-        `/user/approve/${record.id}`,
-        {},
+        `/power-consumption/approve/${record.id}`,
+        {
+          points: record?.totalGreenConsumption,
+        },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -72,42 +72,52 @@ export const BusinessUsersApprovals = () => {
       });
   };
 
+  const deletePointsRequest = (record) => {
+    console.log(record?.id);
+    axios
+      .delete(`/power-consumption/delete/${record.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+        requestsCaller();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error);
+      });
+  };
+
   // Table Column
   const columns = [
     {
-      key: "name",
-      title: "Name",
-      render: (data) => data.name,
+      key: "userId",
+      title: "User ID",
+      render: (data) => data.userId,
     },
     {
-      key: "industryType",
-      title: "Industry Type",
-      render: (data) => data.industryType,
+      key: "day",
+      title: "Day",
+      render: (data) => data.date,
     },
     {
-      key: "points",
-      title: "Points",
-      render: (data) => data.points,
+      key: "month",
+      title: "Month",
+      render: (data) => data.month,
     },
     {
-      key: "email",
-      title: "Email",
-      render: (data) => data.email,
+      key: "year",
+      title: "Year",
+      render: (data) => data.year,
     },
     {
-      key: "phoneNumber",
-      title: "Phone Number",
-      render: (data) => data.phoneNumber,
+      key: "totalConsumption",
+      title: "Total Consumption",
+      render: (data) => data.totalConsumption,
     },
     {
-      key: "",
-      title: "Phone Number",
-      render: (data) => data.phoneNumber,
-    },
-    {
-      key: "isApproved",
-      title: "Status",
-      render: (data) => (data.isApproved ? "Approved" : "Pending"),
+      key: "totalGreenConsumption",
+      title: "Total Green Consumption",
+      render: (data) => data.totalGreenConsumption,
     },
     {
       key: "actions",
@@ -130,7 +140,12 @@ export const BusinessUsersApprovals = () => {
         <CheckOutlined
           title="Approve"
           style={innerTableActionBtnDesign}
-          onClick={() => approveBusinessUser(props?.record)}
+          onClick={() => approvePoints(props?.record)}
+        />
+        <DeleteOutlined
+          title="Delete"
+          style={innerTableActionBtnDesign}
+          onClick={() => deletePointsRequest(props?.record)}
         />
       </div>
     );
@@ -139,7 +154,7 @@ export const BusinessUsersApprovals = () => {
   return (
     <div className="">
       <ActionButtons
-        pageTitle={"Approve Business"}
+        pageTitle={"Points Manager"}
         showTrashButton={false}
         showTrashFunction={""}
         showReFreshButton={true}
@@ -155,7 +170,7 @@ export const BusinessUsersApprovals = () => {
       />
       <div className="border-2 mt-5">
         <DataTable
-          usersData={businessApproval}
+          usersData={pointsApproval}
           columns={columns}
           loading={loading}
         />

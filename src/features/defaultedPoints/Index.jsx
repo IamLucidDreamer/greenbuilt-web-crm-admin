@@ -1,13 +1,13 @@
 import React, { useEffect, useReducer } from "react";
-import axios from "../../../appConfig/httpHelper";
-import ActionButtons from "../../components/actionsButtons/Index";
-import { DataTable } from "../../components/table/Index";
+import axios from "../../appConfig/httpHelper";
+import ActionButtons from "../components/actionsButtons/Index";
+import { DataTable } from "../components/table/Index";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { EyeOutlined, CheckOutlined } from "@ant-design/icons";
-import { innerTableActionBtnDesign } from "../../components/styles/innerTableActions";
+import { innerTableActionBtnDesign } from "../components/styles/innerTableActions";
 
-export const BusinessUsersApprovals = () => {
+export const DefaultedPoints = () => {
   const navigate = useNavigate();
   const token = JSON.parse(localStorage.getItem("jwt"));
 
@@ -26,10 +26,10 @@ export const BusinessUsersApprovals = () => {
 
   const [value, setValue] = useReducer(
     (state, diff) => ({ ...state, ...diff }),
-    { businessApproval: [], drawerValue: {} }
+    { defaultUsers: [], drawerValue: {} }
   );
 
-  const { businessApproval, drawerValue } = value;
+  const { defaultUsers, drawerValue } = value;
 
   // Functions Used for Different Data
   const requestsCaller = () => {
@@ -43,9 +43,9 @@ export const BusinessUsersApprovals = () => {
       .then((res) => {
         console.log(res);
         setValue({
-          businessApproval: res.data.user
+            defaultUsers: res.data.user
             .filter((val) => val.role === 2)
-            .filter((val) => !val.isApproved),
+            .filter((val) => !val.defaultedPoints !== 0),
         });
       })
       .catch((err) => console.log(err))
@@ -105,9 +105,9 @@ export const BusinessUsersApprovals = () => {
       render: (data) => data.phoneNumber,
     },
     {
-      key: "isApproved",
-      title: "Status",
-      render: (data) => (data.isApproved ? "Approved" : "Pending"),
+      key: "defaultedPoints",
+      title: "Defaulted Points",
+      render: (data) => data.defaultedPoints,
     },
     {
       key: "actions",
@@ -139,7 +139,7 @@ export const BusinessUsersApprovals = () => {
   return (
     <div className="">
       <ActionButtons
-        pageTitle={"Approve Business"}
+        pageTitle={"Correct Defaulted Business Points"}
         showTrashButton={false}
         showTrashFunction={""}
         showReFreshButton={true}
@@ -155,7 +155,7 @@ export const BusinessUsersApprovals = () => {
       />
       <div className="border-2 mt-5">
         <DataTable
-          usersData={businessApproval}
+          usersData={defaultUsers}
           columns={columns}
           loading={loading}
         />

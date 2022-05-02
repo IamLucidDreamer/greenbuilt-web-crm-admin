@@ -70,14 +70,22 @@ const Sidebar = () => {
         </Menu.Item>
         <Menu.Item
           key="5"
+          icon={<FundProjectionScreenOutlined style={{ fontSize: "18px" }} />}
+          style={{ fontSize: "18px", display: "flex", color: "#fff" }}
+          onClick={() => navigate("/admin/actualconsumptionmanager")}
+        >
+          Actual Consumption Manager
+        </Menu.Item>
+        <Menu.Item
+          key="6"
           icon={<FormOutlined style={{ fontSize: "18px" }} />}
           style={{ fontSize: "18px", display: "flex", color: "#fff" }}
-          onClick={() => navigate("/admin/assetmanager")}
+          onClick={() => navigate("/admin/assetmaster")}
         >
           Asset Manager
         </Menu.Item>
         <Menu.Item
-          key="6"
+          key="7"
           icon={<FileOutlined style={{ fontSize: "18px" }} />}
           style={{ fontSize: "18px", display: "flex", color: "#fff" }}
           onClick={() => navigate("/admin/staticsmanager")}
@@ -85,7 +93,7 @@ const Sidebar = () => {
           Statics Manager
         </Menu.Item>
         <Menu.Item
-          key="7"
+          key="8"
           icon={<HistoryOutlined style={{ fontSize: "18px" }} />}
           style={{ fontSize: "18px", display: "flex", color: "#fff" }}
           onClick={() => navigate("/admin/productmaster")}
@@ -93,12 +101,20 @@ const Sidebar = () => {
           Product Master
         </Menu.Item>
         <Menu.Item
-          key="8"
+          key="9"
           icon={<HistoryOutlined style={{ fontSize: "18px" }} />}
           style={{ fontSize: "18px", display: "flex", color: "#fff" }}
           onClick={() => navigate("/admin/history")}
         >
           History
+        </Menu.Item>
+        <Menu.Item
+          key="10"
+          icon={<HistoryOutlined style={{ fontSize: "18px" }} />}
+          style={{ fontSize: "18px", display: "flex", color: "#fff" }}
+          onClick={() => navigate("/admin/defaultedpoint")}
+        >
+          Defaulted Points
         </Menu.Item>
       </Menu>
     </Sider>

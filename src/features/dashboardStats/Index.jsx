@@ -26,7 +26,6 @@ export const DashboardStats = () => {
 
   useEffect(() => {
     dataLoader();
-    console.log("Hello UseEffect");
   }, []);
 
   return (
