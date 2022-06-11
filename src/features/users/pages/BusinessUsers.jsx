@@ -110,11 +110,6 @@ export const BusinessUsers = () => {
       render: (data) => data.phoneNumber,
     },
     {
-      key: "",
-      title: "Phone Number",
-      render: (data) => data.phoneNumber,
-    },
-    {
       key: "isApproved",
       title: "Status",
       render: (data) => (data.isApproved ? "Approved" : "Pending"),

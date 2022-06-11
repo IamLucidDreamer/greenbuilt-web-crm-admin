@@ -161,7 +161,7 @@ export const IndustryType = () => {
   return (
     <div className="">
       <ActionButtons
-        pageTitle={"Indutry Type"}
+        pageTitle={"Industry Type"}
         showTrashButton={false}
         showTrashFunction={""}
         showReFreshButton={true}

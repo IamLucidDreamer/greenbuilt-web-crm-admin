@@ -69,6 +69,7 @@ export const Login = () => {
                 Password
               </label>
               <input
+                type="password"
                 placeholder="Password"
                 className="p-1.5 rounded-lg bg-purple-1 bg-opacity-10 border-2 border-purple-1"
                 {...formik.getFieldProps("password")}

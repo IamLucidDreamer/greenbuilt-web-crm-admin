@@ -161,7 +161,7 @@ export const SourceType = () => {
   return (
     <div className="">
       <ActionButtons
-        pageTitle={"Indutry Type"}
+        pageTitle={"Source Type"}
         showTrashButton={false}
         showTrashFunction={""}
         showReFreshButton={true}

@@ -27,14 +27,8 @@ export const Uom = () => {
     }
   );
 
-  const {
-    drawer,
-    loading,
-    pagination,
-    trash,
-    loadingAllUom,
-    downloadAllUom,
-  } = actions;
+  const { drawer, loading, pagination, trash, loadingAllUom, downloadAllUom } =
+    actions;
 
   const [value, setValue] = useReducer(
     (state, diff) => ({ ...state, ...diff }),
@@ -93,8 +87,8 @@ export const Uom = () => {
       )
       .then((res) => {
         toast.success("New Industry Added Successfully.");
-        requestsCaller()
-        setShow(false)
+        requestsCaller();
+        setShow(false);
       })
       .catch((err) => console.log(err))
       .finally(setActions({ loadingAllBusiness: true }));
@@ -161,7 +155,7 @@ export const Uom = () => {
   return (
     <div className="">
       <ActionButtons
-        pageTitle={"UOM Type"}
+        pageTitle={"Unit Of Measurement Type"}
         showTrashButton={false}
         showTrashFunction={""}
         showReFreshButton={true}
@@ -176,7 +170,10 @@ export const Uom = () => {
         addNewFunction={showAddNew}
       />
       {show ? (
-        <form onSubmit={formik.handleSubmit} className="my-4 flex justify-start items-center">
+        <form
+          onSubmit={formik.handleSubmit}
+          className="my-4 flex justify-start items-center"
+        >
           <h1 className="text-xl text-purple-1 m-0">Add New Industry Type</h1>
           <div className="ml-10">
             <input
@@ -188,7 +185,10 @@ export const Uom = () => {
               <div>{formik.errors.feeder}</div>
             ) : null}
           </div>
-          <button className="ml-10 text-xl bg-purple-1 text-white p-3 rounded-xl" type="submit">
+          <button
+            className="ml-10 text-xl bg-purple-1 text-white p-3 rounded-xl"
+            type="submit"
+          >
             Submit
           </button>
           <button className="ml-10" onClick={() => setShow(false)}>
@@ -197,11 +197,7 @@ export const Uom = () => {
         </form>
       ) : null}
       <div className="border-2 mt-5">
-        <DataTable
-          usersData={uom}
-          columns={columns}
-          loading={loading}
-        />
+        <DataTable usersData={uom} columns={columns} loading={loading} />
       </div>
     </div>
   );

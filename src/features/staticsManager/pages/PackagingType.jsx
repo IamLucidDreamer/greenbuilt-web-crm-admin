@@ -161,7 +161,7 @@ export const PackagingType = () => {
   return (
     <div className="">
       <ActionButtons
-        pageTitle={"Indutry Type"}
+        pageTitle={"Packaging Type"}
         showTrashButton={false}
         showTrashFunction={""}
         showReFreshButton={true}
