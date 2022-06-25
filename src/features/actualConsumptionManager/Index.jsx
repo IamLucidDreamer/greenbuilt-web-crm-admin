@@ -35,7 +35,7 @@ export const ActualConsumptionManager = () => {
   const requestsCaller = () => {
     setActions({ loading: true });
     axios
-      .get("/power-consumption/get-all", {
+      .get("/power-consumption/get-all??limit=50&offset=0", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -43,7 +43,7 @@ export const ActualConsumptionManager = () => {
       .then((res) => {
         console.log(res);
         setValue({
-          pointsApproval: res.data.data.filter(val => !val.isApproved),
+          pointsApproval: res.data.data,
         });
       })
       .catch((err) => console.log(err))
@@ -125,6 +125,8 @@ export const ActualConsumptionManager = () => {
       render: (record) => <ColumnActions record={record} />,
     },
   ];
+
+  console.log(pointsApproval);
 
   const ColumnActions = (props) => {
     return (
