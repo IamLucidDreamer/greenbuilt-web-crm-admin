@@ -1,12 +1,12 @@
 thead[class*="ant-table-thead"] th {
-  background: rgb(211, 211, 214);
-  font-size: 15px;
+  background: #efefef;
+  font-size: 16px;
   font-weight: bold;
   color: #140035;
 }
 
 .ant-table-cell {
-  max-width: 100px;
+  max-width: 200px;
   overflow: hidden;
   color: #140035;
 }

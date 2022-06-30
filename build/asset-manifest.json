@@ -1,16 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.81bd8184.css",
-    "main.js": "/static/js/main.02ed25bd.js",
+    "main.css": "/static/css/main.057924af.css",
+    "main.js": "/static/js/main.c6445549.js",
     "static/js/787.216c5cdb.chunk.js": "/static/js/787.216c5cdb.chunk.js",
+    "static/media/loginBg.jpg": "/static/media/loginBg.130989686c4a9938d78f.jpg",
     "static/media/logoGreenbuilt.png": "/static/media/logoGreenbuilt.a7a45d8973397145c087.png",
     "index.html": "/index.html",
-    "main.81bd8184.css.map": "/static/css/main.81bd8184.css.map",
-    "main.02ed25bd.js.map": "/static/js/main.02ed25bd.js.map",
+    "main.057924af.css.map": "/static/css/main.057924af.css.map",
+    "main.c6445549.js.map": "/static/js/main.c6445549.js.map",
     "787.216c5cdb.chunk.js.map": "/static/js/787.216c5cdb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.81bd8184.css",
-    "static/js/main.02ed25bd.js"
+    "static/css/main.057924af.css",
+    "static/js/main.c6445549.js"
   ]
 }

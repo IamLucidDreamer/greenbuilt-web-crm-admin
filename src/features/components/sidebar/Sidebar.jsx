@@ -12,6 +12,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../assets/logoGreenbuilt.png";
+import "./styles.css"
 
 const { Sider } = Layout;
 

@@ -27,7 +27,7 @@ export const HeaderElement = ({ title }) => {
   const getNotifications = () => {
     const token = JSON.parse(localStorage.getItem("jwt"));
     axios
-      .get(`/notification/user/${user.id}?limit=10`, {
+      .get(`/notification`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -80,7 +80,8 @@ export const HeaderElement = ({ title }) => {
         boxShadow: "0px 1px 8px #c1c1c1",
       }}
     >
-      <h1 className="text-purple-1 text-xl m-0">Dashboard / {title}</h1>
+      <h1 className="text-purple-1 text-xl m-0">Admin Dashboard / {title}</h1>
+      <h1 className="text-7xl">Admin Portal</h1>
       <div className="flex items-center justify-center">
         <button
           onClick={() => setShowNotification(true)}

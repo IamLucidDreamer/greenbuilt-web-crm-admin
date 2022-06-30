@@ -35,12 +35,11 @@ export const DashboardStats = () => {
           type="primary"
           loading={loading}
           onClick={() => dataLoader()}
-          style={{ backgroundColor: "#140035" }}
         >
           <ReloadOutlined />
         </Button>
       </div>
-      <div className="flex flex-wrap items-center justify-around">
+      <div className="flex flex-wrap items-center mt-10 gap-8">
         <StatsCard title={"Total Users"} stat={stats.totalEndUsers} icon={1} />
         <StatsCard
           title={"Total Industry Types"}
@@ -60,7 +59,7 @@ export const DashboardStats = () => {
         />
         <StatsCard title={"Total Assets"} stat={stats.totalAssets} icon={6} />
         <StatsCard
-          title={"Total QR's Consumed"}
+          title={"Total QR's Generated"}
           stat={stats.totalQRGenerated}
           icon={7}
         />
