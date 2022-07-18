@@ -6,14 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { DrawerComp } from "./components/Drawer";
 import { FilterDrawer } from "./components/FilterDrawer";
-import { EyeOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { innerTableActionBtnDesign } from "../components/styles/innerTableActions";
-import { AddNewProduct } from "./components/AddNewProduct";
+import { EditProduct } from "./components/EditProduct";
 import { useSelector } from "react-redux";
 
 export const ProductMaster = () => {
   const token = JSON.parse(localStorage.getItem("jwt"));
-  const [showAdd, setShowAdd] = useState(false);
   const user = useSelector((state) => state.user);
 
   // Declaring the States Required for the Working of the Component
@@ -21,6 +20,7 @@ export const ProductMaster = () => {
     (state, diff) => ({ ...state, ...diff }),
     {
       drawer: false,
+      editPlan: false,
       loading: false,
       filter: false,
       pagination: 15,
@@ -33,6 +33,7 @@ export const ProductMaster = () => {
 
   const {
     drawer,
+    editPlan,
     loading,
     filter,
     pagination,
@@ -49,10 +50,11 @@ export const ProductMaster = () => {
       allProducts: [],
       drawerValue: {},
       filterValue: {},
+      editValue: {},
     }
   );
 
-  const { products, allProducts, drawerValue, filterValue } = value;
+  const { products, allProducts, drawerValue, filterValue, editValue } = value;
 
   // Functions Used for Different Data
   const requestsCaller = () => {
@@ -163,6 +165,12 @@ export const ProductMaster = () => {
       sorter: (a, b) => a.title.length - b.title.length,
     },
     {
+      key: "userName",
+      title: "User Name",
+      render: (data) => data.user?.name,
+      sorter: (a, b) => a.title.length - b.title.length,
+    },
+    {
       key: "productCode",
       title: "Product Code",
       render: (data) => data.productCode,
@@ -216,6 +224,15 @@ export const ProductMaster = () => {
             setValue({ drawerValue: props?.record });
           }}
         />
+        <EditOutlined
+          title="Edit"
+          style={innerTableActionBtnDesign}
+          onClick={() => {
+            setActions({ editPlan: true });
+            setValue({ editValue: props?.record });
+            console.log(props?.record, "Hello");
+          }}
+        />
         {!props?.record?.isApproved ? (
           <DeleteOutlined
             title="Ban"
@@ -227,9 +244,7 @@ export const ProductMaster = () => {
     );
   };
 
-  const addNewProduct = () => setShowAdd(true);
-
-  const backAddNewProduct = () => setShowAdd(false);
+  const backEditNewProduct = () => setActions({ editPlan: false });
 
   const onCloseDrawer = () => {
     setActions({ drawer: false });
@@ -247,8 +262,8 @@ export const ProductMaster = () => {
 
   return (
     <>
-      {showAdd ? (
-        <AddNewProduct back={backAddNewProduct} />
+      {editPlan ? (
+        <EditProduct back={backEditNewProduct} data={editValue} />
       ) : (
         <div className="">
           <ActionButtons
@@ -267,8 +282,8 @@ export const ProductMaster = () => {
             csvName={"Products.csv"}
             loadingItems={loadingAllProducts}
             downloadItems={downloadAllProducts}
-            showAddNewButton={true}
-            addNewFunction={addNewProduct}
+            showAddNewButton={false}
+            addNewFunction={""}
           />
           <div className="border-2 mt-5">
             <DataTable
