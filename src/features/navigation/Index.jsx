@@ -20,6 +20,8 @@ import {
 import { ActualConsumptionManager } from "../actualConsumptionManager/Index";
 import { StaticsManager } from "../staticsManager/Index";
 import { DefaultedPoints } from "../defaultedPoints/Index";
+import { ProductMaster } from "../products/Index";
+
 
 export const Navigation = () => {
 
@@ -55,7 +57,8 @@ export const Navigation = () => {
             <Route path="pointsmanager" element={<PointsManager />} />
             <Route path="actualconsumptionmanager" element={<ActualConsumptionManager />} />
             <Route path="staticsmanager" element={<StaticsManager />} />
-            <Route path="defaultedpoint" element={<DefaultedPoints/>}/>
+            <Route path="productmaster" element={<ProductMaster />} />
+            {/* <Route path="defaultedpoint" element={<DefaultedPoints/>}/> */}
             <Route path="assetmaster" element={<Assets />} />
           </Route>
         </>

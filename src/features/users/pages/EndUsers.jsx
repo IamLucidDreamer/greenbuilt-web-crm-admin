@@ -68,9 +68,9 @@ export const EndUsers = () => {
         },
       })
       .then((res) => {
-        toast.success("Products Ready for Download");
+        toast.success("Users Ready for Download");
         setActions({ downloadAllEndUser: true });
-        setValue({ allEndUser: res.data.data });
+        setValue({ allEndUsers: res.data.user.filter((val) => val.role === 1), });
       })
       .catch((err) => console.log(err))
       .finally(setActions({ loadingALlEndUser: true }));

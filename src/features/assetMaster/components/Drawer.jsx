@@ -14,37 +14,25 @@ export const DrawerComp = (props) => {
       visible={props.visible}
     >
       <Tabs defaultActiveKey="1">
-        <TabPane tab="Product information" key="1">
+        <TabPane tab="Asset information" key="1">
           <Row>
             <Col span={12} lg={12} md={12} sm={32} xs={32}>
-              <Desc title="Name" content={props?.data?.title} />
-              <div className="site-description-item-profile-wrapper">
-                <p className="site-description-item-profile-p-label text-purple-1 flex m-0">
-                  <b>Packing Type : </b>
-                  <div className="flex">
-                    {props?.data?.packagingType?.map(data => <p>{data}, </p>)  }
-                  </div>
-                </p>
-              </div>
-              
-              <Desc title="Industry Type" content={props?.data?.industryType} />
-              <Desc
-                title="Approval Status"
-                content={props?.data?.isApproved ? "Approved" : "Not Approved"}
-              />
+              <Desc title="Name" content={props?.data?.name} />
+              <Desc title="Industry Type" content={props?.data?.industryName} />
+              <Desc title="Source Type" content={props?.data?.sourceType} />
+              <Desc title="Service Number" content={props?.data?.serviceNo} />
+              <Desc title="Date Of Commisioning" content={props?.data?.dateOfCommisioning} />
+              <Desc title="Capacity" content={props?.data?.capacity} />
+              <Desc title="EDC" content={props?.data?.edc} />
             </Col>
             <Col span={12} lg={12} md={12} sm={32} xs={32}>
-              <Desc title="Registered On" content={props?.data?.createdAt} />
-              <Desc title="UOM" content={props?.data?.uom} />
-              <Desc title="Description" content={props?.data?.description} />
-              <Desc title="Points" content={props?.data?.points} />
-            </Col>
-
-            <Col span={32} className="p-3 mt-3">
-              <h2>
-                <b>Image : </b>
-              </h2>
-              <Image src={props?.data?.photo} width={"300px"} />
+              <Desc title="Feeder" content={props?.data?.feeder} />
+              <Desc title="Latitude" content={props?.data?.latitude} />
+              <Desc title="Longitude" content={props?.data?.longitude} />
+              <Desc title="Make" content={props?.data?.make} />
+              <Desc title="Model" content={props?.data?.model} />
+              <Desc title="No. Of Weightage" content={props?.data?.noOfWtgs} />
+              <Desc title="Own Captive" content={props?.data?.ownCaptive} />
             </Col>
           </Row>
         </TabPane>

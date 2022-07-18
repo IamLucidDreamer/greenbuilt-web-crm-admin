@@ -81,7 +81,6 @@ export const HeaderElement = ({ title }) => {
       }}
     >
       <h1 className="text-purple-1 text-xl m-0">Admin Dashboard / {title}</h1>
-      <h1 className="text-7xl">Admin Portal</h1>
       <div className="flex items-center justify-center">
         <button
           onClick={() => setShowNotification(true)}

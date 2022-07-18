@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { EyeOutlined, CheckOutlined } from "@ant-design/icons";
 import { innerTableActionBtnDesign } from "../../components/styles/innerTableActions";
+import { DrawerComp } from "../components/DrawerBusiness";
 
 export const BusinessUsersApprovals = () => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ export const BusinessUsersApprovals = () => {
   const requestsCaller = () => {
     setActions({ loading: true });
     axios
-      .get("/user/get-all", {
+      .get("/user/get-all?limit=50&offset=0", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -71,6 +72,8 @@ export const BusinessUsersApprovals = () => {
         toast.error(err.response.data.error);
       });
   };
+
+  const onCloseDrawer = () => setActions({ drawer: false });
 
   // Table Column
   const columns = [
@@ -119,14 +122,14 @@ export const BusinessUsersApprovals = () => {
   const ColumnActions = (props) => {
     return (
       <div className="flex justify-around">
-        {/* <EyeOutlined
+        <EyeOutlined
           title="View"
           style={innerTableActionBtnDesign}
           onClick={() => {
             setActions({ drawer: true });
             setValue({ drawerValue: props?.record });
           }}
-        /> */}
+        />
         <CheckOutlined
           title="Approve"
           style={innerTableActionBtnDesign}
@@ -160,14 +163,14 @@ export const BusinessUsersApprovals = () => {
           loading={loading}
         />
       </div>
-      {/* <div>
-    <DrawerComp
-      title={"Product Details"}
-      visible={drawer}
-      onCloseDrawer={onCloseDrawer}
-      data={drawerValue}
-    />
-  </div> */}
+      <div>
+        <DrawerComp
+          title={"Product Details"}
+          visible={drawer}
+          onCloseDrawer={onCloseDrawer}
+          data={drawerValue}
+        />
+      </div>
     </div>
   );
 };

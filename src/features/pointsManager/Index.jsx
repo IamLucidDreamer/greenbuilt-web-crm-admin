@@ -3,9 +3,16 @@ import ActionButtons from "../components/actionsButtons/Index";
 import { DataTable } from "../components/table/Index";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { EyeOutlined, CheckOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  EyeOutlined,
+  EditOutlined,
+  CheckOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import { innerTableActionBtnDesign } from "../components/styles/innerTableActions";
 import axios from "../../appConfig/httpHelper";
+import { DrawerComp } from "./components/Drawer";
+import { EditEntry } from "./components/EditEntry";
 
 export const PointsManager = () => {
   const navigate = useNavigate();
@@ -17,19 +24,20 @@ export const PointsManager = () => {
     {
       drawer: false,
       loading: false,
+      editPlan: false,
       pagination: 15,
       trash: false,
     }
   );
 
-  const { drawer, loading, pagination, trash } = actions;
+  const { drawer, loading, editPlan, pagination, trash } = actions;
 
   const [value, setValue] = useReducer(
     (state, diff) => ({ ...state, ...diff }),
-    { pointsApproval: [], drawerValue: {} }
+    { pointsApproval: [], drawerValue: {}, editValue: {} }
   );
 
-  const { pointsApproval, drawerValue } = value;
+  const { pointsApproval, drawerValue, editValue } = value;
 
   // Functions Used for Different Data
   const requestsCaller = () => {
@@ -43,7 +51,7 @@ export const PointsManager = () => {
       .then((res) => {
         console.log(res);
         setValue({
-          pointsApproval: res.data.data.filter(val => !val.isApproved)
+          pointsApproval: res.data.data.filter((val) => !val.isApproved),
         });
       })
       .catch((err) => console.log(err))
@@ -53,7 +61,7 @@ export const PointsManager = () => {
   useEffect(() => requestsCaller(), []);
 
   const approvePoints = (record) => {
-    console.log(record)
+    console.log(record);
     axios
       .post(
         `/monthly-plan/consumption/approve/${record.monthlyPlanId}`,
@@ -76,9 +84,12 @@ export const PointsManager = () => {
   const deletePointsRequest = (record) => {
     console.log(record?.id);
     axios
-      .delete(`/monthly-plan/consumption/delete/plan-id/${record.monthlyPlanId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .delete(
+        `/monthly-plan/consumption/delete/plan-id/${record.monthlyPlanId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
       .then((res) => {
         toast.success(res.data.message);
         requestsCaller();
@@ -88,24 +99,23 @@ export const PointsManager = () => {
       });
   };
 
+  const onCloseDrawer = () => setActions({ drawer: false });
+
+  const backEditPlan = () => {
+    setActions({ editPlan: false });
+  };
+
   // Table Column
   const columns = [
+    {
+      key: "userName",
+      title: "User Name",
+      render: (data) => data?.user?.name,
+    },
     {
       key: "totalPlan",
       title: "Total Plan",
       render: (data) => data.toal,
-    },
-    {
-      key: "details",
-      title: "Details",
-      width: "800px",
-      render: (data) => (
-        <DataTable
-          usersData={data?.monthlyPlans}
-          columns={columnsNestedTable}
-          pagination={false} 
-        />
-      ),
     },
     {
       key: "date",
@@ -129,45 +139,26 @@ export const PointsManager = () => {
     },
   ];
 
-  const columnsNestedTable = [
-    {
-      key: "sourceType",
-      title: "Source Type",
-      render: (data) => data.sourceType,
-    },
-    {
-      key: "ownCaptive",
-      title: "Own Captive",
-      render: (data) => data.ownCaptive,
-    },
-    {
-      key: "groupCaptive",
-      title: "Group Captive",
-      render: (data) => data.groupCaptive,
-    },
-    {
-      key: "thirdPartyPurchase",
-      title: "Third Party Purchase",
-      render: (data) => data.thirdPartyPurchase,
-    },
-    {
-      key: "total",
-      title: "Total",
-      render: (data) => data?.ownCaptive + data?.thirdPartyPurchase + data?.groupCaptive,
-    },
-  ];
-
   const ColumnActions = (props) => {
     return (
       <div className="flex justify-around">
-        {/* <EyeOutlined
+        <EyeOutlined
           title="View"
           style={innerTableActionBtnDesign}
           onClick={() => {
             setActions({ drawer: true });
             setValue({ drawerValue: props?.record });
           }}
-        /> */}
+        />
+        <EditOutlined
+          title="Edit"
+          style={innerTableActionBtnDesign}
+          onClick={() => {
+            setActions({ editPlan: true });
+            setValue({editValue: props?.record})
+            console.log(props?.record , "Hello")
+          }}
+        />
         <CheckOutlined
           title="Approve"
           style={innerTableActionBtnDesign}
@@ -183,37 +174,43 @@ export const PointsManager = () => {
   };
 
   return (
-    <div className="">
-      <ActionButtons
-        pageTitle={"Points Manager"}
-        showTrashButton={false}
-        showTrashFunction={""}
-        showReFreshButton={true}
-        refreshFunction={requestsCaller}
-        showExportDataButton={false}
-        exportDataFunction={""}
-        totalItems={""}
-        csvName={""}
-        loadingItems={""}
-        downloadItems={""}
-        showAddNewButton={false}
-        addNewFunction={""}
-      />
-      <div className="border-2 mt-5">
-        <DataTable
-          usersData={pointsApproval}
-          columns={columns}
-          loading={loading}
-        />
-      </div>
-      {/* <div>
-    <DrawerComp
-      title={"Product Details"}
-      visible={drawer}
-      onCloseDrawer={onCloseDrawer}
-      data={drawerValue}
-    />
-  </div> */}
-    </div>
+    <>
+      {editPlan ? (
+        <EditEntry back={backEditPlan} requestsCaller={requestsCaller} data={editValue}/>
+      ) : (
+        <div className="">
+          <ActionButtons
+            pageTitle={"Points Manager"}
+            showTrashButton={false}
+            showTrashFunction={""}
+            showReFreshButton={true}
+            refreshFunction={requestsCaller}
+            showExportDataButton={false}
+            exportDataFunction={""}
+            totalItems={""}
+            csvName={""}
+            loadingItems={""}
+            downloadItems={""}
+            showAddNewButton={false}
+            addNewFunction={""}
+          />
+          <div className="border-2 mt-5">
+            <DataTable
+              usersData={pointsApproval}
+              columns={columns}
+              loading={loading}
+            />
+          </div>
+          <div>
+            <DrawerComp
+              title={"Product Details"}
+              visible={drawer}
+              onCloseDrawer={onCloseDrawer}
+              data={drawerValue}
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 };

@@ -70,7 +70,7 @@ export const DashboardStats = () => {
         />
         <StatsCard
           title={"Total Source Types"}
-          stat={stats.totalQRConsumed}
+          stat={stats.totalSourceTypes}
           icon={9}
         />
       </div>

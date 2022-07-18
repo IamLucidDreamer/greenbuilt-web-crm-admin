@@ -78,6 +78,11 @@ export const ProductApprovals = () => {
       render: (data) => data.title,
     },
     {
+      key: "userName",
+      title: "User Name",
+      render: (data) => data.user?.name,
+    },
+    {
       key: "industryType",
       title: "Industry Type",
       render: (data) => data.industryType,

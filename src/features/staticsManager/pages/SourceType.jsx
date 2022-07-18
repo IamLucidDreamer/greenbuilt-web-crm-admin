@@ -123,11 +123,11 @@ export const SourceType = () => {
       title: "Unique ID",
       render: (data) => data.sourceTypeId,
     },
-    {
-      key: "actions",
-      title: "Actions",
-      render: (record) => <ColumnActions record={record} />,
-    },
+    // {
+    //   key: "actions",
+    //   title: "Actions",
+    //   render: (record) => <ColumnActions record={record} />,
+    // },
   ];
 
   const ColumnActions = (props) => {

@@ -3,9 +3,15 @@ import ActionButtons from "../components/actionsButtons/Index";
 import { DataTable } from "../components/table/Index";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { EyeOutlined, CheckOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  EyeOutlined,
+  EditOutlined,
+  CheckOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import { innerTableActionBtnDesign } from "../components/styles/innerTableActions";
 import axios from "../../appConfig/httpHelper";
+import { EditEntry } from "./components/EditEntry";
 
 export const ActualConsumptionManager = () => {
   const navigate = useNavigate();
@@ -16,13 +22,14 @@ export const ActualConsumptionManager = () => {
     (state, diff) => ({ ...state, ...diff }),
     {
       drawer: false,
+      editPlan: false,
       loading: false,
       pagination: 15,
       trash: false,
     }
   );
 
-  const { drawer, loading, pagination, trash } = actions;
+  const { drawer, loading, editPlan, pagination, trash } = actions;
 
   const [value, setValue] = useReducer(
     (state, diff) => ({ ...state, ...diff }),
@@ -43,7 +50,7 @@ export const ActualConsumptionManager = () => {
       .then((res) => {
         console.log(res);
         setValue({
-          pointsApproval: res.data.data,
+          pointsApproval: res.data.data.filter(val => !val.isApproved)
         });
       })
       .catch((err) => console.log(err))
@@ -90,9 +97,9 @@ export const ActualConsumptionManager = () => {
   // Table Column
   const columns = [
     {
-      key: "userId",
-      title: "User ID",
-      render: (data) => data.userId,
+      key: "userName",
+      title: "User Name",
+      render: (data) => data?.user?.name,
     },
     {
       key: "day",
@@ -139,6 +146,15 @@ export const ActualConsumptionManager = () => {
             setValue({ drawerValue: props?.record });
           }}
         /> */}
+        <EditOutlined
+          title="Edit"
+          style={innerTableActionBtnDesign}
+          onClick={() => {
+            setActions({ editPlan: true });
+            setValue({ editValue: props?.record });
+            console.log(props?.record, "Hello");
+          }}
+        />
         <CheckOutlined
           title="Approve"
           style={innerTableActionBtnDesign}
@@ -153,31 +169,37 @@ export const ActualConsumptionManager = () => {
     );
   };
 
+  const backEditPlan = () => setActions({ editPlan: false });
+
   return (
-    <div className="">
-      <ActionButtons
-        pageTitle={"Points Manager"}
-        showTrashButton={false}
-        showTrashFunction={""}
-        showReFreshButton={true}
-        refreshFunction={requestsCaller}
-        showExportDataButton={false}
-        exportDataFunction={""}
-        totalItems={""}
-        csvName={""}
-        loadingItems={""}
-        downloadItems={""}
-        showAddNewButton={false}
-        addNewFunction={""}
-      />
-      <div className="border-2 mt-5">
-        <DataTable
-          usersData={pointsApproval}
-          columns={columns}
-          loading={loading}
-        />
-      </div>
-      {/* <div>
+    <>
+      {editPlan ? (
+        <EditEntry back={backEditPlan} requestsCaller={requestsCaller} />
+      ) : (
+        <div className="">
+          <ActionButtons
+            pageTitle={"Points Manager"}
+            showTrashButton={false}
+            showTrashFunction={""}
+            showReFreshButton={true}
+            refreshFunction={requestsCaller}
+            showExportDataButton={false}
+            exportDataFunction={""}
+            totalItems={""}
+            csvName={""}
+            loadingItems={""}
+            downloadItems={""}
+            showAddNewButton={false}
+            addNewFunction={""}
+          />
+          <div className="border-2 mt-5">
+            <DataTable
+              usersData={pointsApproval}
+              columns={columns}
+              loading={loading}
+            />
+          </div>
+          {/* <div>
     <DrawerComp
       title={"Product Details"}
       visible={drawer}
@@ -185,6 +207,8 @@ export const ActualConsumptionManager = () => {
       data={drawerValue}
     />
   </div> */}
-    </div>
+        </div>
+      )}
+    </>
   );
 };

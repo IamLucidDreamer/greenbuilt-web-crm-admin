@@ -9,6 +9,7 @@ import {
   FileOutlined,
   HistoryOutlined,
   FormOutlined,
+  ApartmentOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../assets/logoGreenbuilt.png";
@@ -87,7 +88,7 @@ const Sidebar = ({ setTitle }) => {
         </Menu.Item>
         <Menu.Item
           key="5"
-          icon={<FundProjectionScreenOutlined style={{ fontSize: "18px" }} />}
+          icon={<FormOutlined style={{ fontSize: "18px" }} />}
           style={{ fontSize: "18px", display: "flex", color: "#0a2c3c" }}
           onClick={() => {
             navigate("/admin/actualconsumptionmanager");
@@ -98,7 +99,7 @@ const Sidebar = ({ setTitle }) => {
         </Menu.Item>
         <Menu.Item
           key="6"
-          icon={<FormOutlined style={{ fontSize: "18px" }} />}
+          icon={<ApartmentOutlined  style={{ fontSize: "18px" }} />}
           style={{ fontSize: "18px", display: "flex", color: "#0a2c3c" }}
           onClick={() => {
             navigate("/admin/assetmaster");
@@ -120,7 +121,7 @@ const Sidebar = ({ setTitle }) => {
         </Menu.Item>
         <Menu.Item
           key="8"
-          icon={<HistoryOutlined style={{ fontSize: "18px" }} />}
+          icon={<UnorderedListOutlined style={{ fontSize: "18px" }} />}
           style={{ fontSize: "18px", display: "flex", color: "#0a2c3c" }}
           onClick={() => {
             navigate("/admin/productmaster");
@@ -140,14 +141,14 @@ const Sidebar = ({ setTitle }) => {
         >
           History
         </Menu.Item>
-        <Menu.Item
+        {/* <Menu.Item
           key="10"
           icon={<HistoryOutlined style={{ fontSize: "18px" }} />}
           style={{ fontSize: "18px", display: "flex", color: "#0a2c3c" }}
           onClick={() => navigate("/admin/defaultedpoint")}
         >
           Defaulted Points
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
     </Sider>
   );

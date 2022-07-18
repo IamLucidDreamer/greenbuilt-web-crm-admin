@@ -57,7 +57,6 @@ export const Assets = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data);
         setValue({ assets: res.data.data });
       })
       .catch((err) => console.log(err))
@@ -73,7 +72,7 @@ export const Assets = () => {
         },
       })
       .then((res) => {
-        toast.success("Products Ready for Download");
+        toast.success("Assets Ready for Download");
         setActions({ downloadAllAssets: true });
         setValue({ allAssets: res.data.data });
       })
@@ -132,9 +131,9 @@ export const Assets = () => {
   //     .finally(setActions({ loading: false }));
   // };
 
-  const DeleteItem = (productId) => {
+  const DeleteItem = (assetId) => {
     axios
-      .delete(`/product/delete/${productId}`, {
+      .delete(`/asset/delete/${assetId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -143,7 +142,7 @@ export const Assets = () => {
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Product Deletion Failed");
+        toast.error("Asset Deletion Failed");
       });
   };
 
@@ -163,9 +162,9 @@ export const Assets = () => {
       render: (data) => data.id,
     },
     {
-      key: "packagingType",
-      title: "Packaging Type",
-      render: (data) => data.id,
+      key: "modal",
+      title: "Modal",
+      render: (data) => data.model,
     },
     {
       key: "industryName",
@@ -215,7 +214,7 @@ export const Assets = () => {
           <DeleteOutlined
             title="Ban"
             style={innerTableActionBtnDesign}
-            onClick={() => DeleteItem(props?.record?.productId)}
+            onClick={() => DeleteItem(props?.record?.assetId)}
           />
         ) : null}
       </div>
@@ -243,7 +242,7 @@ export const Assets = () => {
   return (
     <>
       {showAdd ? (
-        <AddNewAsset back={backAddNewAsset} />
+        <AddNewAsset back={backAddNewAsset} requestsCaller={requestsCaller}/>
       ) : (
         <div className="">
           <ActionButtons
@@ -273,12 +272,12 @@ export const Assets = () => {
             />
           </div>
           <div>
-            {/* <DrawerComp
+            <DrawerComp
               title={"Asset Details"}
               visible={drawer}
               onCloseDrawer={onCloseDrawer}
               data={drawerValue}
-            /> */}
+            />
           </div>
           {/* <div>
             <FilterDrawer
