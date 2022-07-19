@@ -15,7 +15,7 @@ export function EditProduct(props) {
   //Create Products Error With Points providing String in place of number
   const formik = useFormik({
     initialValues: {
-      points: "",
+      points: props.data.points,
     },
     validationSchema: Yup.object({
       points: Yup.string().required("Required"),
@@ -28,7 +28,7 @@ export function EditProduct(props) {
   const handleEditProduct = (values) => {
     const token = JSON.parse(localStorage.getItem("jwt"));
     axios
-      .post(`/product/update-points/${props.data.productId}`, values, {
+      .put(`/product/update-points/${props.data.id}`, values, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

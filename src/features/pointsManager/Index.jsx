@@ -49,9 +49,9 @@ export const PointsManager = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        console.log(res.data.data?.monthlyPlans);
         setValue({
-          pointsApproval: res.data.data.filter((val) => !val.isApproved),
+          pointsApproval: res.data.data?.filter((val) => val.monthlyPlans[0].isApproved),
         });
       })
       .catch((err) => console.log(err))
@@ -126,6 +126,11 @@ export const PointsManager = () => {
       key: "month",
       title: "Month",
       render: (data) => data.month,
+    },
+    {
+      key: "uid",
+      title: "Month Plan ID",
+      render: (data) => data.monthlyPlanId,
     },
     {
       key: "year",

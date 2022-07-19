@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   EyeOutlined,
+  DownloadOutlined,
   EditOutlined,
   CheckOutlined,
   DeleteOutlined,
@@ -33,10 +34,10 @@ export const ActualConsumptionManager = () => {
 
   const [value, setValue] = useReducer(
     (state, diff) => ({ ...state, ...diff }),
-    { pointsApproval: [], drawerValue: {} }
+    { pointsApproval: [], drawerValue: {}, editValue: {} }
   );
 
-  const { pointsApproval, drawerValue } = value;
+  const { pointsApproval, drawerValue, editValue } = value;
 
   // Functions Used for Different Data
   const requestsCaller = () => {
@@ -50,7 +51,7 @@ export const ActualConsumptionManager = () => {
       .then((res) => {
         console.log(res);
         setValue({
-          pointsApproval: res.data.data.filter(val => !val.isApproved)
+          pointsApproval: res.data.data.filter((val) => !val.isApproved),
         });
       })
       .catch((err) => console.log(err))
@@ -146,6 +147,9 @@ export const ActualConsumptionManager = () => {
             setValue({ drawerValue: props?.record });
           }}
         /> */}
+        <a href={props.record.ebBillLocation} target="_blank">
+          <DownloadOutlined title="Edit" style={innerTableActionBtnDesign} />
+        </a>
         <EditOutlined
           title="Edit"
           style={innerTableActionBtnDesign}
@@ -174,7 +178,11 @@ export const ActualConsumptionManager = () => {
   return (
     <>
       {editPlan ? (
-        <EditEntry back={backEditPlan} requestsCaller={requestsCaller} />
+        <EditEntry
+          back={backEditPlan}
+          requestsCaller={requestsCaller}
+          data={editValue}
+        />
       ) : (
         <div className="">
           <ActionButtons
