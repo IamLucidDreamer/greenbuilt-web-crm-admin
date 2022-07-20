@@ -49,9 +49,9 @@ export const PointsManager = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data?.monthlyPlans);
+        console.log(res.data.data[0].monthlyPlans[0].isApproved);
         setValue({
-          pointsApproval: res.data.data?.filter((val) => val.monthlyPlans[0].isApproved),
+          pointsApproval: res.data.data?.filter((val) => !val.monthlyPlans[0].isApproved),
         });
       })
       .catch((err) => console.log(err))
