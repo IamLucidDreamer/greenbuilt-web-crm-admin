@@ -11,7 +11,6 @@ export const EditEntry = (props) => {
   const sourceType = useSelector((state) => state.statics.sourceType);
 
   const [data, setData] = useState([]);
-
   console.log(props);
   const formik = useFormik({
     initialValues: {
@@ -39,8 +38,8 @@ export const EditEntry = (props) => {
     };
     console.log({ ...data });
     axios
-      .post(
-        `monthly-plan/consumption/update/${props.data.id}`,
+      .put(
+        `/monthly-plan/consumption/update`,
         { ...data },
         {
           headers: {
@@ -110,7 +109,7 @@ export const EditEntry = (props) => {
           </h1>
         </div>
       </div>
-      {sourceType.map((sourceData, index) => {
+      {props.data.monthlyPlans.map((sourceData, index) => {
         const total =
           parseInt(data[index]?.ownCaptive) +
           parseInt(data[index]?.groupCaptive) +
@@ -122,7 +121,7 @@ export const EditEntry = (props) => {
           >
             <div className="p-1 bg-gray-100 flex items-center justify-center w-56 border-l-1">
               <h1 className="text-purple-1 font-semibold m-0 p-2">
-                {sourceData?.name}
+                {sourceData?.sourceType}
               </h1>
             </div>
             <div className="p-1 bg-gray-100 flex items-center justify-center border-l-1">
@@ -133,6 +132,7 @@ export const EditEntry = (props) => {
                     {
                       ...data[index],
                       ownCaptive: parseInt(e.target.value),
+                      id:sourceData.id,
                       sourceType: sourceData.name,
                     },
                     ...data.slice(index + 1),
