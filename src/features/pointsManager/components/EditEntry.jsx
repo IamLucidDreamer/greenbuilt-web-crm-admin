@@ -9,9 +9,23 @@ import { useSelector } from "react-redux";
 export const EditEntry = (props) => {
   const token = JSON.parse(localStorage.getItem("jwt"));
   const sourceType = useSelector((state) => state.statics.sourceType);
-
   const [data, setData] = useState([]);
-  console.log(props);
+
+  useEffect(() => {
+    const tempArray = [];
+    props.data?.monthlyPlans.forEach((value, index) => {
+      tempArray.push({
+        ownCaptive: value.ownCaptive,
+        id: value.id,
+        sourceType: value.sourceType,
+        groupCaptive: value.groupCaptive,
+        thirdPartyPurchase: value.thirdPartyPurchase,
+      })
+    });
+    setData([...tempArray]);
+    console.log(data);
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       monthYear: "",
@@ -50,7 +64,7 @@ export const EditEntry = (props) => {
       .then((res) => {
         toast.success(res.data.message);
         props.back();
-        props.requestsCaller()
+        props.requestsCaller();
       })
       .catch((err) => {
         console.log(err);
@@ -69,7 +83,7 @@ export const EditEntry = (props) => {
         <ArrowLeftOutlined style={{ fontSize: 22 }} />
       </button>
       <h1 className="text-purple-1 text-center text-3xl font-bold">
-         Edit Entry
+        Edit Entry
       </h1>
       <div className="flex flex-col items-center justify-evenly mb-10">
         <h1 className="text-xl text-purple-1">Choose the Month</h1>
@@ -126,13 +140,14 @@ export const EditEntry = (props) => {
             </div>
             <div className="p-1 bg-gray-100 flex items-center justify-center border-l-1">
               <input
+                value={data[index]?.ownCaptive || 0}
                 onChange={(e) => {
                   setData([
                     ...data.slice(0, index),
                     {
                       ...data[index],
                       ownCaptive: parseInt(e.target.value),
-                      id:sourceData.id,
+                      id: sourceData.id,
                       sourceType: sourceData.name,
                     },
                     ...data.slice(index + 1),
@@ -144,6 +159,7 @@ export const EditEntry = (props) => {
             </div>
             <div className="p-1 bg-gray-100 flex items-center justify-center w-56 border-l-1">
               <input
+                value={sourceData?.groupCaptive}
                 onChange={(e) =>
                   setData([
                     ...data.slice(0, index),
@@ -160,6 +176,7 @@ export const EditEntry = (props) => {
             </div>
             <div className="p-3 bg-gray-100 flex items-center justify-center w-56 border-l-1">
               <input
+                value={sourceData?.thirdPartyPurchase}
                 onChange={(e) =>
                   setData([
                     ...data.slice(0, index),
@@ -186,7 +203,7 @@ export const EditEntry = (props) => {
         type="submit"
         className="w-full py-3 px-6 my-5 bg-purple-1 border-2 border-purple-1 focus:outline-none rounded-2xl text-xl text-left text-white font-bold group duration-500 flex justify-evenly items-center hover:shadow-lg shadow-purple-1"
       >
-        Add New Entry
+        Edit Entry
       </button>
     </form>
   );
