@@ -89,6 +89,7 @@ export const EditEntry = (props) => {
         <h1 className="text-xl text-purple-1">Choose the Month</h1>
         <input
           {...formik.getFieldProps("monthYear")}
+          value={`${props.data?.year}-${props.data?.month < 10 ? `0${props.data?.month}` : props.data?.month}`}
           type={"month"}
           className="p-3 text-xl text-purple-1 rounded-xl border-2 border-purple-1 border-opacity-50 focus:outline-purple-11"
         />
@@ -159,7 +160,7 @@ export const EditEntry = (props) => {
             </div>
             <div className="p-1 bg-gray-100 flex items-center justify-center w-56 border-l-1">
               <input
-                value={sourceData?.groupCaptive}
+                value={data[index]?.groupCaptive || 0}
                 onChange={(e) =>
                   setData([
                     ...data.slice(0, index),
@@ -176,7 +177,7 @@ export const EditEntry = (props) => {
             </div>
             <div className="p-3 bg-gray-100 flex items-center justify-center w-56 border-l-1">
               <input
-                value={sourceData?.thirdPartyPurchase}
+                value={data[index]?.thirdPartyPurchase || 0}
                 onChange={(e) =>
                   setData([
                     ...data.slice(0, index),
@@ -193,7 +194,7 @@ export const EditEntry = (props) => {
             </div>
             <div className="p-3 bg-gray-100 flex items-center justify-center w-56 border-l-1">
               <h1 className="text-purple-1 font-semibold m-0">
-                {isNaN(total) ? 0 : total}
+                {isNaN(total) ? "Total" : total}
               </h1>
             </div>
           </div>
