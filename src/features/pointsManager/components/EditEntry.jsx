@@ -28,7 +28,7 @@ export const EditEntry = (props) => {
 
   const formik = useFormik({
     initialValues: {
-      monthYear: "",
+      monthYear: `${props.data?.year}-${props.data?.month < 10 ? `0${props.data?.month}` : props.data?.month}`,
     },
     validationSchema: Yup.object({
       monthYear: Yup.date().required("Required"),
@@ -89,7 +89,7 @@ export const EditEntry = (props) => {
         <h1 className="text-xl text-purple-1">Choose the Month</h1>
         <input
           {...formik.getFieldProps("monthYear")}
-          value={`${props.data?.year}-${props.data?.month < 10 ? `0${props.data?.month}` : props.data?.month}`}
+          value={formik.values.monthYear}
           type={"month"}
           className="p-3 text-xl text-purple-1 rounded-xl border-2 border-purple-1 border-opacity-50 focus:outline-purple-11"
         />
