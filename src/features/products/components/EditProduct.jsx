@@ -94,6 +94,7 @@ export function EditProduct(props) {
             <div className="flex items-center justify-between">
               <div className="my-5 flex flex-col w-5/12">
                 <input
+                  type="number"
                   placeholder={`Units Required / ${formik.values.uom}`}
                   className="p-3 text-xl text-purple-1 rounded-xl border-2 border-purple-1 border-opacity-50 focus:outline-purple-11"
                   {...formik.getFieldProps("points")}

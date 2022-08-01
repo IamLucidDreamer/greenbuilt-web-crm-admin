@@ -27,7 +27,7 @@ export const EditEntry = (props) => {
       })
       .then((res) => {
         toast.success(res.data.message);
-        props.requestsCaller()
+        props.requestsCaller();
         props.back();
       })
       .catch((err) => {
@@ -71,6 +71,8 @@ export const EditEntry = (props) => {
       <form className="" onSubmit={formik.handleSubmit}>
         <div className="my-5 flex flex-col">
           <input
+            type="number"
+            min="0"
             placeholder="Total Consumption"
             className="p-3 text-xl text-purple-1 rounded-xl border-2 border-purple-1 border-opacity-50 focus:outline-purple-11"
             {...formik.getFieldProps("totalConsumption")}
@@ -81,6 +83,8 @@ export const EditEntry = (props) => {
         </div>
         <div className="my-5 flex flex-col">
           <input
+            type="number"
+            min="0"
             placeholder="Green Consumption"
             className="p-3 text-xl text-purple-1 rounded-xl border-2 border-purple-1 border-opacity-50 focus:outline-purple-11"
             {...formik.getFieldProps("greenConsumption")}
