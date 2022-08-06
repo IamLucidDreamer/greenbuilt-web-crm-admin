@@ -141,11 +141,7 @@ export const EditEntry = (props) => {
             </div>
             <div className="p-1 bg-gray-100 flex items-center justify-center border-l-1">
               <input
-                type='number'
-                min='0'
                 value={data[index]?.ownCaptive || 0}
-                type="number"
-                min="0"
                 onChange={(e) => {
                   setData([
                     ...data.slice(0, index),
@@ -167,8 +163,6 @@ export const EditEntry = (props) => {
                 type='number'
                 min='0'
                 value={data[index]?.groupCaptive || 0}
-                type="number"
-                min="0"
                 onChange={(e) =>
                   setData([
                     ...data.slice(0, index),
@@ -188,8 +182,7 @@ export const EditEntry = (props) => {
                 type='number'
                 min='0'
                 value={data[index]?.thirdPartyPurchase || 0}
-                type="number"
-                min="0"
+
                 onChange={(e) =>
                   setData([
                     ...data.slice(0, index),
